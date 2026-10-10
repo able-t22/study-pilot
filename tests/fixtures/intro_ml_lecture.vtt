@@ -1,0 +1,94 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:05.400
+Next topic: Supervised Learning.
+
+00:00:05.400 --> 00:00:12.900
+Think of supervised learning as studying with an answer key.
+
+00:00:12.900 --> 00:00:22.500
+You see many solved problems, and the model adjusts itself until its guesses match the answers.
+
+00:00:22.500 --> 00:00:32.100
+Then we hide a test set to check it really learned the pattern rather than memorising.
+
+00:00:32.100 --> 00:00:37.500
+Next topic: Linear Regression.
+
+00:00:37.500 --> 00:00:45.000
+Imagine fitting a straight line through a cloud of points.
+
+00:00:45.000 --> 00:00:58.450
+Each point that sits far from the line contributes a large squared error, so the line is pulled towards the points to keep the total error small.
+
+00:00:58.450 --> 00:01:03.850
+Next topic: Gradient Descent.
+
+00:01:03.850 --> 00:01:12.050
+Picture standing on a foggy hill and wanting to reach the valley.
+
+00:01:12.050 --> 00:01:20.250
+You feel the slope under your feet and take a step downhill.
+
+00:01:20.250 --> 00:01:31.600
+The learning rate is the size of your step: giant leaps can carry you across the valley, tiny steps take forever.
+
+00:01:31.600 --> 00:01:37.700
+Next topic: Logistic Regression and Classification.
+
+00:01:37.700 --> 00:01:45.900
+The sigmoid works like a dimmer switch rather than an on-off switch.
+
+00:01:45.900 --> 00:01:58.650
+A very negative score gives a probability near zero, a very positive score gives a probability near one, and zero maps to exactly one half.
+
+00:01:58.650 --> 00:02:04.400
+Next topic: Overfitting and Regularization.
+
+00:02:04.400 --> 00:02:13.650
+An overfitted model is like a student who memorises last year's exam word for word.
+
+00:02:13.650 --> 00:02:22.200
+It scores perfectly on those questions but is lost when the wording changes.
+
+00:02:22.200 --> 00:02:29.350
+Regularization forces the student to learn general rules instead.
+
+00:02:29.350 --> 00:02:34.750
+Next topic: Bias-Variance Tradeoff.
+
+00:02:34.750 --> 00:02:39.800
+Imagine throwing darts.
+
+00:02:39.800 --> 00:02:48.700
+High bias means all darts land far from the bullseye in a tight cluster.
+
+00:02:48.700 --> 00:02:59.000
+High variance means the darts are scattered all over, even if their average is centred on the target.
+
+00:02:59.000 --> 00:03:05.100
+Next topic: Neural Networks and Backpropagation.
+
+00:03:05.100 --> 00:03:10.500
+Backpropagation is blame assignment.
+
+00:03:10.500 --> 00:03:26.050
+The network makes a mistake at the output, and the chain rule tells us how much each earlier weight contributed to that mistake, so every weight can be nudged in the right direction.
+
+00:03:26.050 --> 00:03:31.450
+Next topic: Evaluation Metrics.
+
+00:03:31.450 --> 00:03:43.150
+If only one email in a hundred is spam, a lazy model that calls everything not-spam is ninety-nine percent accurate but useless.
+
+00:03:43.150 --> 00:03:52.400
+That is why we look at precision and recall, which focus on the rare class.
+
+00:03:52.400 --> 00:03:58.150
+Next topic: Clustering with K-Means.
+
+00:03:58.150 --> 00:04:07.750
+Think of placing k flags on a map and letting every house join the nearest flag.
+
+00:04:07.750 --> 00:04:18.050
+Then you move each flag to the centre of its houses and repeat until nobody wants to switch.

@@ -1,0 +1,15 @@
+# Full local install (includes lecture video/audio transcription + OCR).
+fastapi>=0.110
+uvicorn[standard]>=0.29
+python-multipart>=0.0.9
+httpx>=0.27
+python-dotenv>=1.0
+pymupdf>=1.24
+python-pptx>=0.6.23
+scikit-learn>=1.4
+numpy>=1.26
+pillow>=10.1
+psycopg[binary,pool]>=3.1
+faster-whisper>=1.0
+av>=12.0
+rapidocr-onnxruntime>=1.3

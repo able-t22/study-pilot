@@ -1,0 +1,1 @@
+deepeval>=3.0   # optional: standard-framework evaluation (Evaluation tab -> Run DeepEval)

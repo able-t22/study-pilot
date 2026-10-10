@@ -1,0 +1,2 @@
+# OPTIONAL: neural embeddings for retrieval (downloads PyTorch, ~2 GB). Set EMBEDDINGS=1 in .env
+sentence-transformers>=2.7

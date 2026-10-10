@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>StudyPilot · Your adaptive study companion</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%237c83ff'/%3E%3Cpath d='M16 6l8 5v10l-8 5-8-5V11z' fill='none' stroke='white' stroke-width='2.4' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="brand"><span class="logo" id="logo"></span><div><b>StudyPilot</b><small>Adaptive study companion</small></div></div>
+    <nav id="tabs"></nav>
+    <div class="side-foot">
+      <div class="status hidden" id="status"><i class="dot"></i><span id="mode"></span><button class="ghost sm" onclick="connectionDetails()" title="OpenRouter diagnostics" aria-label="OpenRouter diagnostics">↗</button></div>
+      <button class="ghost sm block" id="themeBtn" onclick="toggleTheme()"></button>
+    </div>
+  </aside>
+
+  <div class="stage">
+    <header class="top">
+      <div><h1 id="ptitle">Library</h1><p id="psub" class="muted"></p></div>
+      <div class="who">
+        <div class="avatar" id="avatar">?</div>
+        <select id="student" aria-label="Student"></select>
+        <button class="ghost sm" onclick="openIntake()">+ New learner</button><button class="ghost sm" onclick="delLearner()" title="Delete this learner and all their data">Delete</button>
+      </div>
+    </header>
+
+    <main>
+      <!-- LIBRARY -->
+      <section id="library" class="tab">
+        <div class="hero">
+          <div class="hero-txt">
+            <span class="eyebrow">Source-grounded · Adaptive · Multimodal</span>
+            <h2>Turn scattered lectures, textbooks &amp; slides into one cited study companion.</h2>
+            <p>Every answer, question and recommendation links back to the exact page, slide or video timestamp. A learner model tracks what you know and what you are forgetting.</p>
+            <div class="row">
+              <button onclick="$('#files').click()" id="uploadBtn"></button>
+              <button class="ghost" onclick="show('notes')" id="notesBtn"></button>
+              <button class="ghost" onclick="reanalyze()" id="reBtn"></button>
+            </div>
+          </div>
+          <div class="hero-art" id="heroart"></div>
+        </div>
+
+        <div id="jobbar" class="card job hidden"><div class="row between"><b id="jobtitle">Processing</b><span id="jobpct" class="muted">0%</span></div><div class="bar"><i id="jobfill"></i></div><div id="jobmsg" class="muted small"></div></div>
+
+        <div class="kpis" id="kpis"></div>
+
+        <div class="grid2">
+          <div class="card">
+            <div class="card-h"><h3>Add course material</h3><span class="chip">no manual preprocessing</span></div>
+            <div id="drop" class="drop"><input type="file" id="files" multiple hidden accept=".pdf,.pptx,.mp4,.mkv,.mov,.webm,.mp3,.wav,.m4a,.vtt,.srt,.txt,.md">
+              <div class="drop-ic" id="dropic"></div><b>Drop lecture videos, PDFs, slide decks or transcripts</b><span class="muted small">MP4 · MP3 · PDF · PPTX · VTT · SRT — or <a href="#" onclick="$('#files').click();return false">browse files</a></span></div>
+            <label class="toggle"><input id="fastUpload" type="checkbox" checked><span></span>Fast upload · text and scanned-page OCR</label><p class="tiny muted">Fast mode skips figure descriptions, video frames and slide rendering. Turn it off before uploading for full visual processing. Re-analysing rebuilds topics and resets quiz/learner state, so add all sources first.</p>
+          </div>
+          <div class="card"><div class="card-h"><h3>Pipeline</h3></div><div id="pipeline" class="pipe"></div></div>
+        </div>
+
+        <div class="card"><div class="card-h"><h3>Search your material</h3><span class="chip">exact source links</span></div><form class="row" onsubmit="event.preventDefault();searchMaterial()"><input id="sourceQuery" placeholder="Find a definition, formula or concept…" aria-label="Search course material"><button type="submit">Search</button></form><div id="searchResults" aria-live="polite"></div></div>
+        <div class="card"><div class="card-h"><h3>Sources</h3></div><div id="sources"></div></div>
+      </section>
+
+      <section id="cockpit" class="tab hidden">
+        <div class="hero"><div class="hero-txt"><span class="eyebrow">Your next step, backed by evidence</span><h2>Turn knowledge gaps into a daily study plan.</h2><p>Review what is due, repair mistakes and practise weak topics. Progress comes from your answers.</p></div></div>
+        <div id="cockpitBody" aria-live="polite"></div>
+      </section>
+
+      <!-- NOTES -->
+      <section id="notes" class="tab hidden">
+        <div class="split">
+          <div class="card grow">
+            <div class="card-h"><h3>Generate notes</h3><span class="chip">from your lecture videos, PDFs &amp; slides</span></div>
+            <label>Source<select id="n_src"></select></label>
+            <label>Note style</label><div class="modes" id="n_styles"></div>
+            <label>Length<div class="seg seg4" id="n_len"></div></label>
+            <div class="grid2">
+              <label>Audience level<select id="n_level"><option value="beginner">Beginner</option><option value="intermediate" selected>Intermediate</option><option value="advanced">Advanced</option></select></label>
+              <label>Language<select id="n_lang"></select></label>
+            </div>
+            <label>Anything specific? <span class="tiny muted">(optional - e.g. “only formulas and definitions”, “focus on the examples”, “explain simply”)</span><textarea id="n_focus" rows="2" placeholder="Tell StudyPilot exactly what you want in the notes"></textarea></label>
+            <div class="row"><label class="toggle"><input type="checkbox" id="n_ts" checked><span></span>Link points to video timestamps / pages</label><label class="toggle"><input type="checkbox" id="n_vis" checked><span></span>Include on-screen visuals</label></div>
+            <div class="row"><button onclick="genNotes()" id="n_btn">Generate notes</button><span id="n_msg" class="muted"></span></div>
+            <div class="bar hidden" id="n_bar"><i id="n_fill"></i></div>
+          </div>
+          <div class="card side-panel"><div class="card-h"><h3>Saved notes</h3></div><div id="n_list"></div></div>
+        </div>
+        <div class="card hidden" id="n_view"></div>
+      </section>
+
+      <!-- MAP -->
+      <section id="map" class="tab hidden">
+        <div class="split">
+          <div class="card grow"><div class="card-h"><h3>Course flow map <span class="muted small">· read top to bottom, click a topic</span></h3><div class="legend"><i style="background:var(--bad)"></i>weak<i style="background:var(--warn)"></i>developing<i style="background:var(--good)"></i>strong<i style="background:#7c83ff"></i>unassessed</div></div><div id="net"></div></div>
+          <div class="card side-panel" id="topicpanel"><div class="empty"><p>Select a topic on the map to explore its subtopics, key concepts and cited source units.</p></div></div>
+        </div>
+      </section>
+
+      <!-- TUTOR -->
+      <section id="tutor" class="tab hidden">
+        <div class="card chat">
+          <div class="chat-top">
+            <div><b>Grounded tutor</b><span class="muted small"> · answers only from your material, with citations</span></div>
+            <div class="row tight">
+              <select id="lang" title="Answer language" onchange="setLang(this.value)"></select><select id="tstyle" title="Explanation style"><option value="standard">Standard</option><option value="simple">Explain simply</option><option value="exam">Exam-style</option></select>
+              <label class="toggle"><input type="checkbox" id="outside"><span></span>Outside knowledge (web)</label>
+              <label class="toggle"><input type="checkbox" id="speak"><span></span>Read aloud</label>
+            </div>
+          </div>
+          <div id="msgs"><div class="welcome" id="welcome"></div></div>
+          <div class="composer"><input id="q" placeholder="Ask anything about your material…" onkeydown="if(event.key==='Enter')ask()"><button class="ghost icon" onclick="mic()" id="micBtn" title="Voice input"></button><button onclick="ask()" id="askBtn">Ask</button></div>
+        </div>
+      </section>
+
+      <!-- PRACTICE -->
+      <section id="practice" class="tab hidden">
+        <div id="setup">
+          <div class="card"><div class="card-h"><h3>1 · Choose a mode</h3></div><div class="modes" id="modes"></div></div>
+          <div class="card"><div class="card-h"><h3>2 · Configure</h3></div>
+            <div class="grid3">
+              <label>Number of questions <div class="row tight"><input type="range" id="nq" min="3" max="30" value="8" oninput="$('#nqv').textContent=this.value"><b id="nqv">8</b></div></label>
+              <label>Question types <div class="pills" id="types"><label class="pill"><input type="checkbox" value="mcq" checked><span>MCQ</span></label><label class="pill"><input type="checkbox" value="short" checked><span>Short answer</span></label><label class="pill"><input type="checkbox" value="numerical" checked><span>Numerical</span></label></div></label>
+              <label>Scope <span class="tiny muted">(none selected = all topics)</span><div class="pills" id="scope"></div></label>
+            </div>
+            <div class="row"><button onclick="startAssess()" id="genBtn">Generate &amp; verify questions</button><span id="genmsg" class="muted"></span></div>
+          </div>
+        </div>
+        <div id="runner" class="card hidden"></div>
+      </section>
+
+      <!-- DASHBOARD -->
+      <section id="dash" class="tab hidden">
+        <div id="dbanner"></div>
+        <div class="kpis" id="dkpis"></div>
+        <div class="grid2">
+          <div class="card"><div class="card-h"><h3>Mastery radar</h3><span class="chip">BKT × forgetting curve</span></div><div class="chartbox"><canvas id="radar"></canvas></div></div>
+          <div class="card"><div class="card-h"><h3>Next best actions</h3></div><div id="recs"></div></div>
+        </div>
+        <div class="grid2">
+          <div class="card"><div class="card-h"><h3>Mastery by topic</h3></div><div id="mbars"></div></div>
+          <div class="card"><div class="card-h"><h3>Learning trajectory</h3><span class="chip">updates after every answer &amp; chat</span></div><div class="chartbox"><canvas id="traj"></canvas></div><div class="card-h" style="margin-top:14px"><h3>Assessment history</h3></div><div class="chartbox short"><canvas id="hchart"></canvas></div></div>
+        </div>
+        <div class="card"><div class="card-h"><h3>Study schedule</h3><span class="chip">forgetting-curve aware</span></div>
+          <div class="row"><label class="inl">Days to exam<input type="number" id="sdays" value="7" min="1" max="60"></label><label class="inl">Minutes / day<input type="number" id="smin" value="90" step="30" min="30"></label><button onclick="loadSchedule()">Build plan</button></div><div id="sched" class="sched"></div></div>
+        <div class="card"><div class="card-h"><h3>Targeted revision</h3><span class="chip">flashcards · slides · audio</span></div><p class="muted small">Weak topics get their own flashcards, slide deck and audio brief.</p><button onclick="show('revise')">Open Revise</button></div>
+      </section>
+
+      <!-- REVISE -->
+      <section id="revise" class="tab hidden">
+        <div class="seg rvseg" id="rv_tabs"></div>
+        <div id="rv_body"></div>
+      </section>
+
+      <!-- EVAL -->
+      <section id="eval" class="tab hidden">
+        <div class="card"><div class="card-h"><h3>Evaluation</h3></div>
+          <p class="muted">Check how accurately the tutor answers from your material, and compare adaptive practice with random practice across a group of simulated students.</p>
+          <div class="row"><button onclick="runEval('rag')">Check answer quality</button><button class="ghost" onclick="runEval('fw')">Run DeepEval (standard framework)</button><button class="ghost" onclick="runEval('audit')">Audit questions &amp; tags</button><button class="ghost" onclick="runEval('sim')">Run simulated-student study</button><span id="evmsg" class="muted"></span></div>
+          <div class="bar hidden" id="evbar"><i id="evfill"></i></div></div>
+        <div id="evout"></div>
+      </section>
+    </main>
+  </div>
+</div>
+
+<div id="modal" class="modal hidden" onclick="if(event.target===this)closeModal()"><div class="mbox" id="mbox"><button class="ghost icon close" onclick="closeModal()" id="mclose"></button><div id="mbody"></div></div></div>
+<div id="toasts"></div>
+<script src="math.js"></script>
+<script src="app.js"></script>
+</body></html>

@@ -1,0 +1,289 @@
+{
+ "course": "intro_ml",
+ "required_sources": [
+  "intro_ml_textbook.pdf"
+ ],
+ "description": "Team-built test set for the sample ML course: every in-scope question lists the exact page / slide / video time that answers it. 'adjacent_off_material' are ML questions the course does NOT cover (hard refusal cases).",
+ "in_scope": [
+  {
+   "question": "What do you do with the data to check that a model really generalises?",
+   "reference": "Hold out a test set; the training set fits the model and the test set measures generalisation.",
+   "truth": [
+    {
+     "source": "intro_ml_textbook.pdf",
+     "page": 1
+    },
+    {
+     "source": "intro_ml_lecture.vtt",
+     "at": 10
+    }
+   ]
+  },
+  {
+   "question": "What goes wrong if the step size in gradient descent is set too high?",
+   "reference": "The updates overshoot and the loss diverges.",
+   "truth": [
+    {
+     "source": "intro_ml_textbook.pdf",
+     "page": 1
+    },
+    {
+     "source": "intro_ml_lecture.vtt",
+     "at": 60
+    },
+    {
+     "source": "intro_ml_slides.pptx",
+     "slide": 3
+    }
+   ]
+  },
+  {
+   "question": "How big is a mini-batch in stochastic gradient descent here?",
+   "reference": "32 examples.",
+   "truth": [
+    {
+     "source": "intro_ml_textbook.pdf",
+     "page": 1
+    }
+   ]
+  },
+  {
+   "question": "Which function turns a linear score into a probability between 0 and 1?",
+   "reference": "The sigmoid function.",
+   "truth": [
+    {
+     "source": "intro_ml_textbook.pdf",
+     "page": 2
+    },
+    {
+     "source": "intro_ml_lecture.vtt",
+     "at": 100
+    },
+    {
+     "source": "intro_ml_slides.pptx",
+     "slide": 4
+    }
+   ]
+  },
+  {
+   "question": "Which loss is minimised when training logistic regression?",
+   "reference": "Cross-entropy (log loss).",
+   "truth": [
+    {
+     "source": "intro_ml_textbook.pdf",
+     "page": 2
+    },
+    {
+     "source": "intro_ml_slides.pptx",
+     "slide": 4
+    }
+   ]
+  },
+  {
+   "question": "How does lasso differ from ridge regularization?",
+   "reference": "L1 (lasso) penalises absolute weights and can zero some weights; L2 (ridge) penalises squared weights.",
+   "truth": [
+    {
+     "source": "intro_ml_textbook.pdf",
+     "page": 2
+    },
+    {
+     "source": "intro_ml_slides.pptx",
+     "slide": 5
+    }
+   ]
+  },
+  {
+   "question": "How can I tell a model is overfitting from its errors?",
+   "reference": "Training error is low while validation error is high.",
+   "truth": [
+    {
+     "source": "intro_ml_textbook.pdf",
+     "page": 2
+    },
+    {
+     "source": "intro_ml_slides.pptx",
+     "slide": 5
+    }
+   ]
+  },
+  {
+   "question": "How many folds of cross-validation are standard for choosing regularization strength?",
+   "reference": "5 folds.",
+   "truth": [
+    {
+     "source": "intro_ml_textbook.pdf",
+     "page": 2
+    }
+   ]
+  },
+  {
+   "question": "Why is a more complex model not always better at generalising?",
+   "reference": "Complexity lowers bias but raises variance; best generalisation is at intermediate complexity.",
+   "truth": [
+    {
+     "source": "intro_ml_textbook.pdf",
+     "page": 3
+    },
+    {
+     "source": "intro_ml_lecture.vtt",
+     "at": 160
+    },
+    {
+     "source": "intro_ml_slides.pptx",
+     "slide": 6
+    }
+   ]
+  },
+  {
+   "question": "In the dart analogy, what does high variance look like?",
+   "reference": "Darts scattered widely even if their average is centred on the target.",
+   "truth": [
+    {
+     "source": "intro_ml_lecture.vtt",
+     "at": 160
+    }
+   ]
+  },
+  {
+   "question": "Why can't a deep network just use linear layers?",
+   "reference": "Without non-linear activations it collapses into a single linear model.",
+   "truth": [
+    {
+     "source": "intro_ml_textbook.pdf",
+     "page": 3
+    },
+    {
+     "source": "intro_ml_slides.pptx",
+     "slide": 7
+    }
+   ]
+  },
+  {
+   "question": "How are gradients obtained for every weight in a network?",
+   "reference": "Backpropagation applies the chain rule backwards from the output layer to the input.",
+   "truth": [
+    {
+     "source": "intro_ml_textbook.pdf",
+     "page": 3
+    },
+    {
+     "source": "intro_ml_lecture.vtt",
+     "at": 220
+    },
+    {
+     "source": "intro_ml_slides.pptx",
+     "slide": 7
+    }
+   ]
+  },
+  {
+   "question": "What F1 score results from precision 0.8 and recall 0.5?",
+   "reference": "About 0.62.",
+   "truth": [
+    {
+     "source": "intro_ml_textbook.pdf",
+     "page": 3
+    }
+   ]
+  },
+  {
+   "question": "Why can accuracy mislead when one class is rare?",
+   "reference": "A model predicting only the majority class scores high accuracy but is useless; use precision and recall.",
+   "truth": [
+    {
+     "source": "intro_ml_textbook.pdf",
+     "page": 3
+    },
+    {
+     "source": "intro_ml_lecture.vtt",
+     "at": 220
+    }
+   ]
+  },
+  {
+   "question": "When does k-means stop iterating?",
+   "reference": "When the assignments no longer change.",
+   "truth": [
+    {
+     "source": "intro_ml_textbook.pdf",
+     "page": 4
+    },
+    {
+     "source": "intro_ml_lecture.vtt",
+     "at": 245
+    }
+   ]
+  },
+  {
+   "question": "What helps choose the number of clusters?",
+   "reference": "The elbow method (within-cluster variance against k).",
+   "truth": [
+    {
+     "source": "intro_ml_textbook.pdf",
+     "page": 4
+    },
+    {
+     "source": "intro_ml_slides.pptx",
+     "slide": 9
+    }
+   ]
+  },
+  {
+   "question": "What does R squared tell you about a regression?",
+   "reference": "The fraction of variance explained by the model.",
+   "truth": [
+    {
+     "source": "intro_ml_textbook.pdf",
+     "page": 1
+    },
+    {
+     "source": "intro_ml_slides.pptx",
+     "slide": 2
+    }
+   ]
+  },
+  {
+   "question": "What is the decision boundary of logistic regression?",
+   "reference": "Points where the predicted probability equals the threshold.",
+   "truth": [
+    {
+     "source": "intro_ml_textbook.pdf",
+     "page": 2
+    }
+   ]
+  },
+  {
+   "question": "Which activation is defined as max(0, z)?",
+   "reference": "ReLU.",
+   "truth": [
+    {
+     "source": "intro_ml_textbook.pdf",
+     "page": 3
+    },
+    {
+     "source": "intro_ml_slides.pptx",
+     "slide": 7
+    }
+   ]
+  },
+  {
+   "question": "What does the ROC curve plot?",
+   "reference": "True positive rate against false positive rate across thresholds.",
+   "truth": [
+    {
+     "source": "intro_ml_textbook.pdf",
+     "page": 3
+    }
+   ]
+  }
+ ],
+ "adjacent_off_material": [
+  "How does the attention mechanism in transformers work?",
+  "What is the update rule of the Adam optimizer?",
+  "Explain how support vector machines choose a hyperplane.",
+  "What is dropout and how does it regularize a network?",
+  "How does reinforcement learning use rewards?",
+  "What is the vanishing gradient problem in recurrent networks?"
+ ]
+}
