@@ -4,7 +4,7 @@ A source-grounded study companion that turns your course material into cited ans
 
 ## Run locally
 
-Requires Python 3.10–3.12. No Node.js, GPU or separate FFmpeg installation is required.
+Requires Python 3.10–3.12.
 
 ```powershell
 python -m venv .venv
@@ -17,25 +17,11 @@ python run.py
 
 Open http://127.0.0.1:8000. If an existing virtual environment reports that its Python executable is missing, install Python again and recreate the environment.
 
-## AI configuration
 
-**OpenRouter is the only online AI provider.** Set these server-side environment variables:
 
-``dotenv
-OPENROUTER_API_KEY=your-key
-OPENROUTER_MODEL=google/gemma-4-31b-it:free
-OPENROUTER_FALLBACK_MODELS=inclusionai/ling-3.1-flash,openrouter/free
-LLM_TIMEOUT=30
-LLM_ATTEMPT_TIMEOUT=12
-QUIZ_AI_SECONDS=25
-OPENROUTER_VISION=0
-```
 
-Choose a model available in your OpenRouter account. Optional comma-separated fallback models are tried once when a model is unavailable or rate limited. Calls use a shared request budget and temporary model cooldowns; there are no repeated retry sleeps. Authentication and invalid-request errors are surfaced. Models that reject JSON mode are retried without that parameter.
 
-The key never goes to the browser. Previous provider settings are ignored. With no OpenRouter key, local search, extractive tutoring, source-based concept questions and learner tracking remain available. An unavailable AI model also falls back to labelled concept checks built directly from source definitions where the material supports them.
 
-Set OPENROUTER_VISION=1 only when all configured models accept images. Full visual ingestion otherwise uses local OCR. See [OpenRouter documentation](https://openrouter.ai/docs) for available models and API options.
 
 ## Uploads
 
